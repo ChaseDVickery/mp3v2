@@ -183,7 +183,7 @@ public class Connection {
     public KeyPair generateKeyPairWithSpec(DHParameterSpec paramSpec) {
         KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
         dh.initialize(paramSpec);
-        keyPair = dh.generateKeyPair();
+        return dh.generateKeyPair();
     }
 
     /**
