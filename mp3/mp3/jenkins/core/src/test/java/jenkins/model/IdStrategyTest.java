@@ -19,11 +19,11 @@ public class IdStrategyTest {
         assertEquals(filename, id);
     }
 
-    @Test
-    public void testidFromFilename() {
-        String filename = "abc~a";
-        IdStrategy.CaseSensitive cs = new IdStrategy.CaseSensitive();
-        String id = cs.idFromFilename(filename);
-        assertEquals(id, "abcA");
-    }
+//    @Test
+//    public void testidFromFilename() {
+//        String filename = "abc~a";
+//        IdStrategy.CaseSensitive cs = new IdStrategy.CaseSensitive();
+//        String id = cs.idFromFilename(filename);
+//        assertEquals(id, "abcA");
+//    }
 }
