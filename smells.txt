@@ -1,0 +1,33 @@
+
+1.
+	What code smell is this?:
+		Duplicated code
+	What refactoring can be done?:
+		Replacing duplicated code with a method (and making the new method).
+		
+3.
+	This method only uses methods from the Jenkins class within it, so the updateAndTrim method may be more suited for the Jenkins class. This is an example of the "feature envy" code smell, and it could be remedied by moving the updateAndTrim function into the Jenkins class.
+	
+4.
+	We can eliminate the code repetition here by making those calls within a loop instead of having 4 consecutive chunks of data that is the same.
+	(IdStrategyTest.java added to project under "jenkins > core > test > java > jenkins > model > IdStrategyTest.java)
+	
+6.
+	There was a code smell in the JenkinsTest.java file where multiple lines were repeated in 2 different tests for making and setting up a new "GlobalMatrixAuthorizationStrategy". I extracted these lines to a private method in the file called "setupGlobalMatrixAuthorizationStrategy()" which sets up and returns a new GlobalMatrixAuthorizationStrategy object like was done in each of the two methods "testDoScript" (lines 274-283) and "testDoEval" (lines 305-314).
+	
+	My extracted method is below:
+	"
+	private GlobalMatrixAuthorizationStrategy setupGlobalMatrixAuthorizationStrategy() {
+        GlobalMatrixAuthorizationStrategy gmas = new GlobalMatrixAuthorizationStrategy() {
+            @Override public boolean hasPermission(String sid, Permission p) {
+                return p == Jenkins.RUN_SCRIPTS ? hasExplicitPermission(sid, p) : super.hasPermission(sid, p);
+            }
+        };
+        gmas.add(Jenkins.ADMINISTER, "alice");
+        gmas.add(Jenkins.RUN_SCRIPTS, "alice");
+        gmas.add(Jenkins.READ, "bob");
+        gmas.add(Jenkins.ADMINISTER, "charlie");
+        return gmas;
+    }
+	"
+	
