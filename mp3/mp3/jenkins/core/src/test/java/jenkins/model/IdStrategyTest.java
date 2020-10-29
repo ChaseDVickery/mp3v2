@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.jvnet.hudson.test.Issue;
-//import CaseSensitive.idFromFilename;
+import IdStrategy.CaseSensitive;
 
 public class IdStrategyTest {
 
