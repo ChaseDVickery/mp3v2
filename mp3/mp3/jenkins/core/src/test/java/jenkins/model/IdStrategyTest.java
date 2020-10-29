@@ -17,7 +17,7 @@ public class IdStrategyTest {
         String filename = "[a-z0-9_. -]+";
         IdStrategy.CaseSensitive cs = new IdStrategy.CaseSensitive();
         String id = cs.idFromFilename(filename);
-        assertEquals(filename, id);
+        assertEquals("[[a-z0-9_. -]+]", id);
     }
 
 //    @Test
