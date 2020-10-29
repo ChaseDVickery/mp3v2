@@ -153,10 +153,10 @@ public class Connection {
             AlgorithmParameterGenerator paramGen = AlgorithmParameterGenerator.getInstance("DH");
             paramGen.init(keySize);
 
-//            KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
-//            dh.initialize();
-//            keyPair = dh.generateKeyPair();
-            keyPair = generateKeyPairWithSpec(paramGen.generateParameters().getParameterSpec(DHParameterSpec.class));
+            KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
+            dh.initialize((paramGen.generateParameters().getParameterSpec(DHParameterSpec.class));
+            keyPair = dh.generateKeyPair();
+//            keyPair = generateKeyPairWithSpec(paramGen.generateParameters().getParameterSpec(DHParameterSpec.class));
 
             // send a half and get a half
             writeKey(keyPair.getPublic());
@@ -164,10 +164,10 @@ public class Connection {
         } else {
             otherHalf = KeyFactory.getInstance("DH").generatePublic(readKey());
 
-//            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DH");
-//            keyPairGen.initialize();
-//            keyPair = keyPairGen.generateKeyPair();
-            keyPair = generateKeyPairWithSpec(((DHPublicKey) otherHalf).getParams());
+            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DH");
+            keyPairGen.initialize(((DHPublicKey) otherHalf).getParams());
+            keyPair = keyPairGen.generateKeyPair();
+//            keyPair = generateKeyPairWithSpec(((DHPublicKey) otherHalf).getParams());
 
             // send a half and get a half
             writeKey(keyPair.getPublic());
@@ -180,11 +180,11 @@ public class Connection {
         return ka;
     }
 
-    public KeyPair generateKeyPairWithSpec(DHParameterSpec paramSpec) {
-        KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
-        dh.initialize(paramSpec);
-        return dh.generateKeyPair();
-    }
+//    public KeyPair generateKeyPairWithSpec(DHParameterSpec paramSpec) {
+//        KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
+//        dh.initialize(paramSpec);
+//        return dh.generateKeyPair();
+//    }
 
     /**
      * Upgrades a connection with transport encryption by the specified symmetric cipher.
