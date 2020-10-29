@@ -180,7 +180,7 @@ public class Connection {
         return ka;
     }
 
-    public KeyPair generateKeyPairWithSpec(DHParameterSpec paramSpec) {
+    public KeyPair generateKeyPairWithSpec(DHParameterSpec paramSpec) throws IOException, GeneralSecurityException {
         KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
         dh.initialize(paramSpec);
         return dh.generateKeyPair();
