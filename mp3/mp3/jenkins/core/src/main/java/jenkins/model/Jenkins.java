@@ -921,6 +921,10 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
         }.run(reactor);
     }
 
+    private void updateAndTrim() {
+        updateComputerList();
+        trimLabels();
+    }
 
     public TcpSlaveAgentListener getTcpSlaveAgentListener() {
         return tcpSlaveAgentListener;
