@@ -272,15 +272,7 @@ public class JenkinsTest {
     @Test
     public void testDoScript() throws Exception {
         j.jenkins.setSecurityRealm(new LegacySecurityRealm());
-        GlobalMatrixAuthorizationStrategy gmas = new GlobalMatrixAuthorizationStrategy() {
-            @Override public boolean hasPermission(String sid, Permission p) {
-                return p == Jenkins.RUN_SCRIPTS ? hasExplicitPermission(sid, p) : super.hasPermission(sid, p);
-            }
-        };
-        gmas.add(Jenkins.ADMINISTER, "alice");
-        gmas.add(Jenkins.RUN_SCRIPTS, "alice");
-        gmas.add(Jenkins.READ, "bob");
-        gmas.add(Jenkins.ADMINISTER, "charlie");
+        GlobalMatrixAuthorizationStrategy gmas = setupGlobalMatrixAuthorizationStrategy();
         j.jenkins.setAuthorizationStrategy(gmas);
         WebClient wc = j.createWebClient();
         wc.login("alice");
@@ -300,9 +292,7 @@ public class JenkinsTest {
         wc.assertFails("script", HttpURLConnection.HTTP_FORBIDDEN);
     }
 
-    @Test
-    public void testDoEval() throws Exception {
-        j.jenkins.setSecurityRealm(new LegacySecurityRealm());
+    private GlobalMatrixAuthorizationStrategy setupGlobalMatrixAuthorizationStrategy() {
         GlobalMatrixAuthorizationStrategy gmas = new GlobalMatrixAuthorizationStrategy() {
             @Override public boolean hasPermission(String sid, Permission p) {
                 return p == Jenkins.RUN_SCRIPTS ? hasExplicitPermission(sid, p) : super.hasPermission(sid, p);
@@ -312,6 +302,13 @@ public class JenkinsTest {
         gmas.add(Jenkins.RUN_SCRIPTS, "alice");
         gmas.add(Jenkins.READ, "bob");
         gmas.add(Jenkins.ADMINISTER, "charlie");
+        return gmas;
+    }
+
+    @Test
+    public void testDoEval() throws Exception {
+        j.jenkins.setSecurityRealm(new LegacySecurityRealm());
+        GlobalMatrixAuthorizationStrategy gmas = setupGlobalMatrixAuthorizationStrategy();
         j.jenkins.setAuthorizationStrategy(gmas);
         WebClient wc = j.createWebClient();
         wc.login("alice");
