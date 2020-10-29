@@ -14,14 +14,16 @@ public class IdStrategyTest {
     @Test
     public void testidFromFilenameBasic() {
         String filename = "abcXYZ_. -";
-        String id = IdStrategy.CaseSensitive.idFromFilename(filename);
+        IdStrategy.CaseSensitive cs = new IdStrategy.CaseSensitive();
+        String id = cs.idFromFilename(filename);
         assertEquals(filename, id);
     }
 
     @Test
     public void testidFromFilename() {
         String filename = "abc~a";
-        String id = IdStrategy.CaseSensitive.idFromFilename(filename);
+        IdStrategy.CaseSensitive cs = new IdStrategy.CaseSensitive();
+        String id = cs.idFromFilename(filename);
         assertEquals(id, "abcA");
     }
 }
